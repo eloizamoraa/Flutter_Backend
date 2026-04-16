@@ -1,6 +1,7 @@
 import Joi, { ObjectSchema } from 'joi';
 import { NextFunction, Request, Response } from 'express';
 import { IOrganizacion } from '../models/Organizacion';
+import { ITarea } from '../models/Tarea';
 import { IUsuario } from '../models/Usuario';
 import Logging from '../library/Logging';
 
@@ -43,6 +44,16 @@ export const Schemas = {
             name: Joi.string().required(),
             email: Joi.string().email().required(),
             password: Joi.string().min(6).required()
+        })
+    },
+    tarea: {
+        create: Joi.object<ITarea>({
+            titulo: Joi.string().required(),
+            fechaInicio: Joi.date().required(),
+            fechaFin: Joi.date().required(),
+            usuarios: Joi.array()
+                .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
+                .optional()
         })
     }
 };
