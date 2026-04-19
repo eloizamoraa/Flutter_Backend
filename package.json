@@ -5,6 +5,7 @@
     "main": "src/server.ts",
     "scripts": {
         "start": "node build/server.js",
+        "seed": "npx ts-node src/db/seed.ts",
         "postinstall": "tsc"
     },
     "author": "",
