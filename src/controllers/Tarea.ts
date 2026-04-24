@@ -18,5 +18,14 @@ const readByOrganizacion = async (req: Request, res: Response, next: NextFunctio
         return res.status(500).json({ error });
     }
 };
+//Update estado de la tarea
+const updateEstado = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tarea = await TareaService.updateEstadoTarea(req.params.tareaId,req.body.estado); 
+     res.status(200).json(tarea)
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
 
-export default { createByOrganizacion, readByOrganizacion };
+export default { createByOrganizacion, readByOrganizacion, updateEstado };

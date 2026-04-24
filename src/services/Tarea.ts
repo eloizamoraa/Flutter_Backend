@@ -7,6 +7,7 @@ interface ICreateTareaInput {
     fechaInicio: Date;
     fechaFin: Date;
     usuarios?: (mongoose.Types.ObjectId | string)[];
+    estado?: 'To do' | 'In progress' | 'Done';
 }
 
 const createTareaByOrganizacion = async (
@@ -28,18 +29,43 @@ const createTareaByOrganizacion = async (
         fechaInicio: data.fechaInicio,
         fechaFin: data.fechaFin,
         usuarios: data.usuarios || [],
-        organizacionId
+        organizacionId,
+        estado: data.estado || 'To do' // 🔥 AQUÍ ESTÁ LA CLAVE
     });
 
     return await tarea.save();
 };
 
-const getTareasByOrganizacion = async (organizacionId: string): Promise<ITareaModel[]> => {
+const getTareasByOrganizacion = async (
+    organizacionId: string
+): Promise<ITareaModel[]> => {
     if (!mongoose.Types.ObjectId.isValid(organizacionId)) {
         return [];
     }
 
-    return await Tarea.find({ organizacionId }).populate({ path: 'usuarios', select: 'name' });
+    return await Tarea.find({ organizacionId }).populate({
+        path: 'usuarios',
+        select: 'name'
+    });
 };
 
-export default { createTareaByOrganizacion, getTareasByOrganizacion };
+const updateEstadoTarea = async (
+    tareaId: string,
+    estado: 'To do' | 'In progress' | 'Done'
+): Promise<ITareaModel | null> => {
+    if (!mongoose.Types.ObjectId.isValid(tareaId)) {
+        return null;
+    }
+
+    return await Tarea.findByIdAndUpdate(
+        tareaId,
+        { estado },
+        { new: true }
+    );
+};
+
+export default {
+    createTareaByOrganizacion,
+    getTareasByOrganizacion,
+    updateEstadoTarea
+};

@@ -9,6 +9,7 @@ import usuarioRoutes from './routes/Usuario';
 import authRoutes from './routes/Auth';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger';
+import tareaRoutes from './routes/Tarea';
 
 const router = express();
 
@@ -51,6 +52,7 @@ const StartServer = () => {
     router.use('/organizaciones', organizacionRoutes);
     router.use('/usuarios', usuarioRoutes);
     router.use('/auth', authRoutes);
+    router.use('/tareas', tareaRoutes);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));

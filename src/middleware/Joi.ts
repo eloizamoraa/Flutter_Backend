@@ -9,11 +9,9 @@ export const ValidateJoi = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
             await schema.validateAsync(req.body);
-
             next();
         } catch (error) {
             Logging.error(error);
-
             return res.status(422).json({ error });
         }
     };
@@ -28,6 +26,7 @@ export const Schemas = {
             name: Joi.string().required()
         })
     },
+
     usuario: {
         create: Joi.object<IUsuario>({
             organizacion: Joi.string()
@@ -37,6 +36,7 @@ export const Schemas = {
             email: Joi.string().email().required(),
             password: Joi.string().min(6).required()
         }),
+
         update: Joi.object<IUsuario>({
             organizacion: Joi.string()
                 .regex(/^[0-9a-fA-F]{24}$/)
@@ -45,19 +45,32 @@ export const Schemas = {
             email: Joi.string().email().required(),
             password: Joi.string().min(6).required()
         }),
+
         login: Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().required()
         })
     },
+
     tarea: {
         create: Joi.object<ITarea>({
             titulo: Joi.string().required(),
             fechaInicio: Joi.date().required(),
             fechaFin: Joi.date().required(),
+
+            estado: Joi.string()
+                .valid('To do', 'In progress', 'Done')
+                .optional(),
+
             usuarios: Joi.array()
                 .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
                 .optional()
+        }),
+
+        updateEstado: Joi.object({
+            estado: Joi.string()
+                .valid('To do', 'In progress', 'Done')
+                .required()
         })
     }
 };
