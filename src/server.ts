@@ -49,10 +49,10 @@ const StartServer = () => {
     router.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     /** Routes */
-    router.use('/organizaciones', organizacionRoutes);
-    router.use('/usuarios', usuarioRoutes);
-    router.use('/auth', authRoutes);
-    router.use('/tareas', tareaRoutes);
+   router.use('/organizaciones', organizacionRoutes);
+   router.use('/organizaciones', tareaRoutes);
+   router.use('/usuarios', usuarioRoutes);
+   router.use('/auth', authRoutes);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));
