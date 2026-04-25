@@ -30,7 +30,7 @@ const createTareaByOrganizacion = async (
         fechaFin: data.fechaFin,
         usuarios: data.usuarios || [],
         organizacionId,
-        estado: data.estado || 'To do' // 🔥 AQUÍ ESTÁ LA CLAVE
+        estado: data.estado || 'To do' 
     });
 
     return await tarea.save();

@@ -197,3 +197,8 @@ Para compilar manualmente:
 ```bash
 npx tsc
 ```
+## USO DE LA IA
+He preguntado a ChatGPT cómo enviar un PATCH para actualizar datos?
+Cómo hacer las tareas de tipo mas visual? Solución : Kanban
+Corrección de errores (Rutas mal hechas por mí (Eroor 404))
+Corrección en que la tarea no cambiaba de columna: Uso de setState().
